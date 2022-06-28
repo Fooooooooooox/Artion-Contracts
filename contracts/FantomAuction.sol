@@ -861,6 +861,8 @@ contract FantomAuction is OwnableUpgradeable, ReentrancyGuardUpgradeable {
 
         uint256 minimumBid = 0;
 
+        // minminBidReserve是一个bool
+        // 如果为1 表示用户设定minimumBid 把传入的 _reservePrice 设定给minimumBid
         if (minBidReserve) {
             minimumBid = _reservePrice;
         }
@@ -901,6 +903,7 @@ contract FantomAuction is OwnableUpgradeable, ReentrancyGuardUpgradeable {
     }
 
     /**
+    // 发起买单的时候资金会被托管？escrowed
      @notice Used for sending back escrowed funds from a previous bid
      @param _currentHighestBidder Address of the last highest bidder
      @param _currentHighestBid Ether or Mona amount in WEI that the bidder sent when placing their bid
@@ -938,6 +941,7 @@ contract FantomAuction is OwnableUpgradeable, ReentrancyGuardUpgradeable {
      * @dev Only access controls admin
      * @param _tokenContract The address of the token contract
      */
+    //  reclaimERC20
     function reclaimERC20(address _tokenContract) external onlyOwner {
         require(_tokenContract != address(0), "Invalid address");
         IERC20 token = IERC20(_tokenContract);
